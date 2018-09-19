@@ -13,7 +13,7 @@
   "author": "Mac Heller-Ogden",
   "license": "MIT",
   "dependencies": {
-    "needful": "0.0.4",
+    "needful": "0.0.5",
     "require-dir": "^1.0.0"
   }
 }
