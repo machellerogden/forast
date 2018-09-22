@@ -7,13 +7,18 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha \"test/**/*.spec.js\""
   },
   "keywords": [],
   "author": "Mac Heller-Ogden",
   "license": "MIT",
   "dependencies": {
+    "joi": "^13.6.0",
     "needful": "0.0.5",
     "require-dir": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
   }
 }
