@@ -511,5 +511,25 @@ describe('forast', () => {
                 init: null
             });
         });
+
+        it('WithStatement');
+        it('LabeledStatement');
+        it('BreakStatement');
+        it('ContinueStatement');
+        it('IfStatement');
+        it('SwitchStatement');
+        it('SwitchCase');
+        it('ThrowStatement');
+        it('TryStatement');
+        it('CatchClause');
+        it('WhileStatement');
+        it('DoWhileStatement');
+        it('ForStatement');
+        it('ForInStatement');
+        it('ForOfStatement');
+        it('FunctionDeclaration');
+        it('FunctionExpression');
+        it('LogicalExpression');
+        it('ConditionalExpression');
     });
 });
