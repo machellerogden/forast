@@ -430,13 +430,13 @@ describe('forast', () => {
         it('UnaryExpression', () => {
 
             expect(forast.nodes.UnaryExpression('typeof', {
-                type: 'Identifer',
+                type: 'Identifier',
                 name: 'foo'
             })).to.eql({
                 type: 'UnaryExpression',
                 operator: 'typeof',
                 argument: {
-                    type: 'Identifer',
+                    type: 'Identifier',
                     name: 'foo'
                 },
                 prefix: true
@@ -507,26 +507,381 @@ describe('forast', () => {
                 id: {
                     type: 'Identifier',
                     name: 'foo'
+                }
+            });
+            expect(forast.nodes.VariableDeclarator({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'Literal',
+                value: 'bar'
+            })).to.eql({
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo'
                 },
-                init: null
+                init: {
+                    type: 'Literal',
+                    value: 'bar'
+                }
             });
         });
 
-        it('WithStatement');
-        it('LabeledStatement');
-        it('BreakStatement');
-        it('ContinueStatement');
-        it('IfStatement');
-        it('SwitchStatement');
-        it('SwitchCase');
-        it('ThrowStatement');
-        it('TryStatement');
-        it('CatchClause');
+        it('WithStatement', () => {
+
+            expect(forast.nodes.WithStatement({
+                type: 'ObjectExpression',
+                properties: [
+                    {
+                        type: 'Property',
+                        key: {
+                            name: 'foo',
+                            type: 'Identifier'
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: 'bar'
+                        }
+                    }
+                ]
+            }, {
+                type: 'BlockStatement',
+                body: [
+                    {
+                        type: 'ExpressionStatement',
+                        expression: {
+                            type: 'Identifier',
+                            name: 'foo'
+                        }
+                    }
+                ]
+            })).to.eql({
+                type: 'WithStatement',
+                object: {
+                    type: 'ObjectExpression',
+                    properties: [
+                        {
+                            type: 'Property',
+                            key: {
+                                name: 'foo',
+                                type: 'Identifier'
+                            },
+                            value: {
+                                type: 'Literal',
+                                value: 'bar'
+                            }
+                        }
+                    ]
+                },
+                body: {
+                    type: 'BlockStatement',
+                    body: [
+                        {
+                            type: 'ExpressionStatement',
+                            expression: {
+                                type: 'Identifier',
+                                name: 'foo'
+                            }
+                        }
+                    ]
+                }
+            });
+        });
+
+        it('LabeledStatement', () => {
+
+            expect(forast.nodes.LabeledStatement({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'BlockStatement',
+                body: [
+                    {
+                        type: 'ExpressionStatement',
+                        expression: {
+                            type: 'Identifier',
+                            name: 'foo'
+                        }
+                    }
+                ]
+            })).to.eql({
+                type: 'LabeledStatement',
+                label: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                body: {
+                    type: 'BlockStatement',
+                    body: [
+                        {
+                            type: 'ExpressionStatement',
+                            expression: {
+                                type: 'Identifier',
+                                name: 'foo'
+                            }
+                        }
+                    ]
+                }
+            });
+        });
+
+        it('BreakStatement', () => {
+
+            expect(forast.nodes.BreakStatement({
+                type: 'Identifier',
+                name: 'foo'
+            })).to.eql({
+                type: 'BreakStatement',
+                label: {
+                    type: 'Identifier',
+                    name: 'foo'
+                }
+            });
+
+            expect(forast.nodes.BreakStatement()).to.eql({
+                type: 'BreakStatement',
+                label: null
+            });
+        });
+
+        it('ContinueStatement', () => {
+
+            expect(forast.nodes.ContinueStatement({
+                type: 'Identifier',
+                name: 'foo'
+            })).to.eql({
+                type: 'ContinueStatement',
+                label: {
+                    type: 'Identifier',
+                    name: 'foo'
+                }
+            });
+
+            expect(forast.nodes.ContinueStatement()).to.eql({
+                type: 'ContinueStatement',
+                label: null
+            });
+        });
+
+        it('IfStatement', () => {
+
+            expect(forast.nodes.IfStatement({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'Literal',
+                    value: true
+                }
+            })).to.eql({
+                type: 'IfStatement',
+                test: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                consequent: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'Literal',
+                        value: true
+                    }
+                },
+                alternate: null
+            });
+
+            expect(forast.nodes.IfStatement({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'Literal',
+                    value: true
+                }
+            }, {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'Literal',
+                    value: false
+                }
+            })).to.eql({
+                type: 'IfStatement',
+                test: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                consequent: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'Literal',
+                        value: true
+                    }
+                },
+                alternate: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'Literal',
+                        value: false
+                    }
+                }
+            });
+
+        });
+
+        it('SwitchStatement', () => {
+
+            expect(forast.nodes.SwitchStatement({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'SwitchCase',
+                test: {
+                    type: 'Literal',
+                    value: 'bar'
+                },
+                consequent: [ {
+                    type: 'BreakStatement'
+                } ]
+            })).to.eql({
+                type: 'SwitchStatement',
+                discriminant: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                cases: [ {
+                    type: 'SwitchCase',
+                    test: {
+                        type: 'Literal',
+                        value: 'bar'
+                    },
+                    consequent: [ {
+                        type: 'BreakStatement'
+                    } ]
+                } ]
+            });
+        });
+
+        it('SwitchCase', () => {
+
+            expect(forast.nodes.SwitchCase([ {
+                type: 'BreakStatement'
+            } ], {
+                type: 'Literal',
+                value: 'bar'
+            })).to.eql({
+                type: 'SwitchCase',
+                test: {
+                    type: 'Literal',
+                    value: 'bar'
+                },
+                consequent: [ {
+                    type: 'BreakStatement'
+                } ]
+            });
+
+            expect(forast.nodes.SwitchCase({
+                type: 'BreakStatement'
+            }, {
+                type: 'Literal',
+                value: 'bar'
+            })).to.eql({
+                type: 'SwitchCase',
+                test: {
+                    type: 'Literal',
+                    value: 'bar'
+                },
+                consequent: [ {
+                    type: 'BreakStatement'
+                } ]
+            });
+
+            expect(forast.nodes.SwitchCase({
+                type: 'BreakStatement'
+            })).to.eql({
+                type: 'SwitchCase',
+                test: null,
+                consequent: [ {
+                    type: 'BreakStatement'
+                } ]
+            });
+        });
+
+        it('ThrowStatement', () => {
+
+            expect(forast.nodes.ThrowStatement({
+                type: 'Identifier',
+                name: 'foo'
+            })).to.eql({
+                type: 'ThrowStatement',
+                argument: {
+                    type: 'Identifier',
+                    name: 'foo'
+                }
+            });
+
+        });
+
+        it('TryStatement', () => {
+
+            expect(forast.nodes.TryStatement({
+                type: 'BlockStatement',
+                body: [
+                    {
+                        type: 'ExpressionStatement',
+                        expression: {
+                            type: 'Identifier',
+                            name: 'foo'
+                        }
+                    }
+                ]
+            })).to.eql({
+                type: 'TryStatement',
+                block: {
+                    type: 'BlockStatement',
+                    body: [
+                        {
+                            type: 'ExpressionStatement',
+                            expression: {
+                                type: 'Identifier',
+                                name: 'foo'
+                            }
+                        }
+                    ]
+                },
+                handler: null,
+                finalizer: null
+            });
+
+        });
+
+        it('CatchClause', () => {
+
+            expect(forast.nodes.CatchClause({
+                type: 'Identifier',
+                name: 'err'
+            }, {
+                type: 'BlockStatement',
+                body: [ ]
+            })).to.eql({
+                type: 'CatchClause',
+                param: {
+                    type: 'Identifier',
+                    name: 'err'
+                },
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                }
+            });
+
+        });
+
         it('WhileStatement');
         it('DoWhileStatement');
         it('ForStatement');
         it('ForInStatement');
-        it('ForOfStatement');
         it('FunctionDeclaration');
         it('FunctionExpression');
         it('LogicalExpression');
