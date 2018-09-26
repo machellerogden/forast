@@ -878,10 +878,402 @@ describe('forast', () => {
 
         });
 
-        it('WhileStatement');
-        it('DoWhileStatement');
-        it('ForStatement');
-        it('ForInStatement');
+        it('WhileStatement', () => {
+
+            expect(forast.nodes.WhileStatement({
+                type: 'Literal',
+                value: true
+            }, {
+                type: 'BlockStatement',
+                body: [ ]
+            })).to.eql({
+                type: 'WhileStatement',
+                test: {
+                    type: 'Literal',
+                    value: true
+                },
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                }
+            });
+
+        });
+
+        it('DoWhileStatement', () => {
+
+            expect(forast.nodes.DoWhileStatement({
+                type: 'BlockStatement',
+                body: [ ]
+            }, {
+                type: 'Literal',
+                value: true
+            })).to.eql({
+                type: 'DoWhileStatement',
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                },
+                test: {
+                    type: 'Literal',
+                    value: true
+                }
+            });
+
+        });
+
+        it('ForStatement', () => {
+
+            expect(forast.nodes.ForStatement({
+                type: 'BlockStatement',
+                body: [ ]
+            }, {
+                type: 'VariableDeclaration',
+                declarations: [ {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    init: {
+                        type: 'Literal',
+                        value: 0
+                    }
+                } ],
+                kind: 'let'
+            }, {
+                type: 'BinaryExpression',
+                operator: '>=',
+                left: {
+                    type: 'Identifier',
+                    name: 'i'
+                },
+                right: {
+                    type: 'Literal',
+                    value: 10
+                }
+            }, {
+                type: 'UpdateExpression',
+                operator: '++',
+                argument: {
+                    type: 'Identifier',
+                    name: 'i'
+                },
+                prefix: false
+            })).to.eql({
+                type: 'ForStatement',
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                },
+                init: {
+                    type: 'VariableDeclaration',
+                    declarations: [ {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'i'
+                        },
+                        init: {
+                            type: 'Literal',
+                            value: 0
+                        }
+                    } ],
+                    kind: 'let'
+                },
+                test: {
+                    type: 'BinaryExpression',
+                    operator: '>=',
+                    left: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    right: {
+                        type: 'Literal',
+                        value: 10
+                    }
+                },
+                update: {
+                    type: 'UpdateExpression',
+                    operator: '++',
+                    argument: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    prefix: false
+                }
+            });
+
+            expect(forast.nodes.ForStatement({
+                type: 'BlockStatement',
+                body: [ ]
+            }, {
+                type: 'VariableDeclaration',
+                declarations: [ {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    init: {
+                        type: 'Literal',
+                        value: 0
+                    }
+                } ],
+                kind: 'let'
+            }, {
+                type: 'BinaryExpression',
+                operator: '>=',
+                left: {
+                    type: 'Identifier',
+                    name: 'i'
+                },
+                right: {
+                    type: 'Literal',
+                    value: 10
+                }
+            })).to.eql({
+                type: 'ForStatement',
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                },
+                init: {
+                    type: 'VariableDeclaration',
+                    declarations: [ {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'i'
+                        },
+                        init: {
+                            type: 'Literal',
+                            value: 0
+                        }
+                    } ],
+                    kind: 'let'
+                },
+                test: {
+                    type: 'BinaryExpression',
+                    operator: '>=',
+                    left: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    right: {
+                        type: 'Literal',
+                        value: 10
+                    }
+                },
+                update: null
+            });
+
+            expect(forast.nodes.ForStatement({
+                type: 'BlockStatement',
+                body: [ ]
+            }, {
+                type: 'VariableDeclaration',
+                declarations: [ {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    init: {
+                        type: 'Literal',
+                        value: 0
+                    }
+                } ],
+                kind: 'let'
+            })).to.eql({
+                type: 'ForStatement',
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                },
+                init: {
+                    type: 'VariableDeclaration',
+                    declarations: [ {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'i'
+                        },
+                        init: {
+                            type: 'Literal',
+                            value: 0
+                        }
+                    } ],
+                    kind: 'let'
+                },
+                test: null,
+                update: null
+            });
+
+            expect(forast.nodes.ForStatement({
+                type: 'BlockStatement',
+                body: [ ]
+            }, {
+                type: 'VariableDeclaration',
+                declarations: [ {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    init: {
+                        type: 'Literal',
+                        value: 0
+                    }
+                } ],
+                kind: 'let'
+            }, null, {
+                type: 'UpdateExpression',
+                operator: '++',
+                argument: {
+                    type: 'Identifier',
+                    name: 'i'
+                },
+                prefix: false
+            })).to.eql({
+                type: 'ForStatement',
+                body: {
+                    type: 'BlockStatement',
+                    body: [ ]
+                },
+                init: {
+                    type: 'VariableDeclaration',
+                    declarations: [ {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'i'
+                        },
+                        init: {
+                            type: 'Literal',
+                            value: 0
+                        }
+                    } ],
+                    kind: 'let'
+                },
+                test: null,
+                update: {
+                    type: 'UpdateExpression',
+                    operator: '++',
+                    argument: {
+                        type: 'Identifier',
+                        name: 'i'
+                    },
+                    prefix: false
+                }
+            });
+        });
+
+        it('ForInStatement', () => {
+            expect(forast.nodes.ForInStatement({
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'CallExpression',
+                    callee: {
+                        type: 'MemberExpression',
+                        object: {
+                            type: 'Identifier',
+                            name: 'console'
+                        },
+                        property: {
+                            type: 'Identifier',
+                            name: 'log'
+                        },
+                        computed: false
+                    },
+                    arguments: [
+                        {
+                            type: 'Identifier',
+                            name: 'foo'
+                        }
+                    ]
+                }
+            }, {
+                type: 'VariableDeclaration',
+                declarations: [ {
+                    type: 'VariableDeclarator',
+                    id: {
+                        type: 'Identifier',
+                        name: 'name'
+                    }
+                } ],
+                kind: 'let'
+            }, {
+                type: 'ObjectExpression',
+                properties: [
+                    {
+                        type: 'Property',
+                        key: {
+                            name: 'name',
+                            type: 'Identifier'
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: 'bar'
+                        }
+                    }
+                ]
+            })).to.eql({
+                type: 'ForInStatement',
+                body: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'CallExpression',
+                        callee: {
+                            type: 'MemberExpression',
+                            object: {
+                                type: 'Identifier',
+                                name: 'console'
+                            },
+                            property: {
+                                type: 'Identifier',
+                                name: 'log'
+                            },
+                            computed: false
+                        },
+                        arguments: [
+                            {
+                                type: 'Identifier',
+                                name: 'foo'
+                            }
+                        ]
+                    }
+                },
+                left: {
+                    type: 'VariableDeclaration',
+                    declarations: [ {
+                        type: 'VariableDeclarator',
+                        id: {
+                            type: 'Identifier',
+                            name: 'name'
+                        }
+                    } ],
+                    kind: 'let'
+                },
+                right: {
+                    type: 'ObjectExpression',
+                    properties: [
+                        {
+                            type: 'Property',
+                            key: {
+                                name: 'name',
+                                type: 'Identifier'
+                            },
+                            value: {
+                                type: 'Literal',
+                                value: 'bar'
+                            }
+                        }
+                    ]
+                }
+            });
+        });
+
         it('FunctionDeclaration');
         it('FunctionExpression');
         it('LogicalExpression');
