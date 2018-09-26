@@ -1274,9 +1274,87 @@ describe('forast', () => {
             });
         });
 
-        it('FunctionDeclaration');
-        it('FunctionExpression');
-        it('LogicalExpression');
-        it('ConditionalExpression');
+        it('FunctionDeclaration', () => {
+
+            expect(forast.nodes.FunctionDeclaration({
+                type: 'Identifier',
+                name: 'foo'
+            })).to.eql({
+                type: 'FunctionDeclaration',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo'
+                }
+            });
+        });
+
+        it('FunctionExpression', () => {
+
+            expect(forast.nodes.FunctionExpression()).to.eql({
+                type: 'FunctionExpression'
+            });
+        });
+
+        it('LogicalExpression', () => {
+
+            expect(forast.nodes.LogicalExpression('&&', {
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'Identifier',
+                name: 'bar'
+            })).to.eql({
+                type: 'LogicalExpression',
+                operator: '&&',
+                left: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                right: {
+                    type: 'Identifier',
+                    name: 'bar'
+                },
+            });
+        });
+
+        it('ConditionalExpression', () => {
+
+            expect(forast.nodes.ConditionalExpression({
+                type: 'Identifier',
+                name: 'foo'
+            }, {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'Literal',
+                    value: true
+                }
+            }, {
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'Literal',
+                    value: false
+                }
+            })).to.eql({
+                type: 'ConditionalExpression',
+                test: {
+                    type: 'Identifier',
+                    name: 'foo'
+                },
+                alternate: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'Literal',
+                        value: true
+                    }
+                },
+                consequent: {
+                    type: 'ExpressionStatement',
+                    expression: {
+                        type: 'Literal',
+                        value: false
+                    }
+                }
+            });
+        });
     });
 });
