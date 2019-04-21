@@ -1356,5 +1356,29 @@ describe('forast', () => {
                 }
             });
         });
+
+        it('Ternary', () => {
+
+            expect(forast.trees.expressions.Ternary(forast.nodes.Identifier('foo'), true, false)).to.eql({
+                type: 'ExpressionStatement',
+                expression: {
+                    type: 'ConditionalExpression',
+                    test: {
+                        type: 'Identifier',
+                        name: 'foo',
+                        computed: false
+                    },
+                    alternate: {
+                        type: 'Literal',
+                        value: true
+                    },
+                    consequent: {
+                        type: 'Literal',
+                        value: false
+                    }
+                }
+            });
+        });
+
     });
 });
