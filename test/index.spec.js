@@ -1370,11 +1370,11 @@ describe('forast', () => {
                     },
                     alternate: {
                         type: 'Literal',
-                        value: true
+                        value: false
                     },
                     consequent: {
                         type: 'Literal',
-                        value: false
+                        value: true
                     }
                 }
             });
